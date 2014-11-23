@@ -1,36 +1,79 @@
 package mebubo.genres.core;
 
-import mebubo.genres.core.converters.LocalDateTimePersistenceConverter;
+import mebubo.genres.core.converters.LocalDatePersistenceConverter;
+import mebubo.genres.core.converters.PeriodPersistenceConverter;
 
-import javax.persistence.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table(name = "learned_words")
-public class LearnedWord extends Word {
+public class LearnedWord {
 
     public LearnedWord() {
     }
 
     public LearnedWord(Word word) {
-        this.setFrequencyBooks(word.getFrequencyBooks());
-        this.setFrequencyFilms(word.getFrequencyFilms());
-        this.setGenre(word.getGenre());
-        this.setLemme(word.getLemme());
-        this.setRank(word.getRank());
+        this.word = word;
     }
 
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
-    LocalDateTime due = LocalDateTime.now();
+    @Id
+    @GeneratedValue
+    private int id;
 
-    public LocalDateTime getDue() {
+    @OneToOne
+    private Word word;
+
+    @Convert(converter = LocalDatePersistenceConverter.class)
+    LocalDate due = LocalDate.now();
+
+    @Convert(converter = PeriodPersistenceConverter.class)
+    Period period = initialPeriod();
+
+    private static Period initialPeriod() {
+        return Period.ofDays(1);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public Word getWord() {
+        return word;
+    }
+
+    public void setWord(Word word) {
+        this.word = word;
+    }
+
+    public LocalDate getDue() {
         return due;
     }
 
-    public void setDue(LocalDateTime due) {
+    public void setDue(LocalDate due) {
         this.due = due;
     }
 
-    //Duration period;
+    public void reset() {
+        this.period = initialPeriod();
+        this.due = LocalDate.now();
+    }
 }

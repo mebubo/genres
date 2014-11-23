@@ -1,6 +1,15 @@
 package mebubo.genres.core;
 
-import javax.persistence.*;
+import mebubo.genres.core.converters.GenrePersistenceConverter;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "lexique")
@@ -11,12 +20,23 @@ public class Word {
     private int id;
 
     private String lemme;
-    private String genre;
+
+    @Convert(converter = GenrePersistenceConverter.class)
+    private Genre genre;
+
     @Column(name = "freqlemfilms2")
     private float frequencyFilms;
     @Column(name = "freqlemlivres")
     private float frequencyBooks;
     private int rank;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public float getFrequencyBooks() {
         return frequencyBooks;
@@ -50,11 +70,11 @@ public class Word {
         this.lemme = lemme;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 }

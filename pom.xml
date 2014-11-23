@@ -10,8 +10,25 @@
 
     <properties>
         <dropwizard.version>0.7.1</dropwizard.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>mebubo.genres.GenresApplication</mainClass>
+                    <arguments>
+                        <argument>server</argument>
+                        <argument>config.yml</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>io.dropwizard</groupId>

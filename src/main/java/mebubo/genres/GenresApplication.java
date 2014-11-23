@@ -9,7 +9,6 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import mebubo.genres.core.LearnedWord;
 import mebubo.genres.core.Word;
-import mebubo.genres.dao.LearnedWordDAO;
 import mebubo.genres.dao.WordDAO;
 import mebubo.genres.resources.WordResource;
 
@@ -40,8 +39,7 @@ public class GenresApplication extends Application<GenresConfiguration> {
     public void run(GenresConfiguration genresConfiguration, Environment environment) throws Exception {
         environment.jersey().setUrlPattern("/api/*");
         WordDAO wordDAO = new WordDAO(hibernate.getSessionFactory());
-        LearnedWordDAO learnedWordDAO = new LearnedWordDAO(hibernate.getSessionFactory());
-        environment.jersey().register(new WordResource(wordDAO, learnedWordDAO));
+        environment.jersey().register(new WordResource(wordDAO));
 
     }
 }

@@ -1,1 +1,25 @@
-Hello world!
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Genres</title>
+</head>
+<div id="genres-app"></div>
+<div>
+    <ul id="genres-log"></ul>
+</div>
+<script type="text/template" id="card-template">
+    <button id="m">un</button>
+    <button id="f">une</button>
+    <section id="word">
+        <p>
+            <%= lemme %>
+        </p>
+        <%= rank %>
+    </section>
+</script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/backbone/backbone.js"></script>
+<script src="js/app.js"></script>
+</html>
